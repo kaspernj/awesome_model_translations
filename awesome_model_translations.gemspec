@@ -24,5 +24,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "rails", ">= 7.0.8"
   spec.add_dependency "globalize_current_translation"
 
+  spec.add_development_dependency "pry-rails"
+  spec.add_development_dependency "factory_bot_rails"
   spec.add_development_dependency "rspec-rails"
 end
