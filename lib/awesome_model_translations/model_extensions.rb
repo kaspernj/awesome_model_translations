@@ -4,7 +4,7 @@ module AwesomeModelTranslations::ModelExtensions
   end
 
   module ClassMethods
-    def translations(*attributes)
+    def translates(*attributes)
       class_name = "#{name}::Translation"
       translations_table_name = "#{table_name.singularize}_translations"
 
@@ -14,6 +14,10 @@ module AwesomeModelTranslations::ModelExtensions
 
       translation_model_class.define_singleton_method(:name) do
         class_name
+      end
+
+      define_singleton_method(:translated_attribute_names) do
+        attributes
       end
 
       translation_model_class.belongs_to model_name.element.to_sym, inverse_of: :translations, optional: true
