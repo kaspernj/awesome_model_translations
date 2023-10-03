@@ -5,7 +5,7 @@ module AwesomeModelTranslations::ModelExtensions
 
   module ClassMethods
     def translates(*attributes)
-      class_name = "#{name}::Translation"
+      translations_class_name = "#{name}::Translation"
       translations_table_name = "#{table_name.singularize}_translations"
 
       translation_model_class = Class.new(AwesomeModelTranslations::Translation) do
@@ -13,18 +13,18 @@ module AwesomeModelTranslations::ModelExtensions
       end
 
       translation_model_class.define_singleton_method(:name) do
-        class_name
+        translations_class_name
       end
 
       define_singleton_method(:translated_attribute_names) do
         attributes
       end
 
-      translation_model_class.belongs_to model_name.element.to_sym, inverse_of: :translations, optional: true
+      translation_model_class.belongs_to :globalized_model, class_name: model_name.name, foreign_key: "#{model_name.element}_id", inverse_of: :translations, optional: true
 
       const_set(:Translation, translation_model_class)
 
-      has_many :translations, autosave: true, class_name:, dependent: :destroy
+      has_many :translations, autosave: true, class_name: translations_class_name, dependent: :destroy, inverse_of: :globalized_model
 
       define_method(:changed?) do |*args, &blk|
         super(*args, &blk) || translations.target.any?(&:changed?)
