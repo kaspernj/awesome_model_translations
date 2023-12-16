@@ -7,26 +7,27 @@ require "rails/all"
 Bundler.require(*Rails.groups)
 require "awesome_model_translations"
 
-module Dummy
-  class Application < Rails::Application
-    config.load_defaults Rails::VERSION::STRING.to_f
+module Dummy; end
 
-    # For compatibility with applications that use this config
-    config.action_controller.include_all_helpers = false
+class Dummy::Application < Rails::Application
+  config.load_defaults Rails::VERSION::STRING.to_f
 
-    # Configuration for the application, engines, and railties goes here.
-    #
-    # These settings can be overridden in specific environments using the files
-    # in config/environments, which are processed later.
-    #
-    # config.time_zone = "Central Time (US & Canada)"
-    # config.eager_load_paths << Rails.root.join("extras")
+  # For compatibility with applications that use this config
+  config.action_controller.include_all_helpers = false
 
-    config.i18n.available_locales = [:da, :en]
-    config.i18n.default_locale = :en
-    config.i18n.fallbacks = {
-      da: [:da, :en],
-      en: [:en, :da]
-    }
-  end
+  # Configuration for the application, engines, and railties goes here.
+  #
+  # These settings can be overridden in specific environments using the files
+  # in config/environments, which are processed later.
+  #
+  # config.time_zone = "Central Time (US & Canada)"
+  # config.eager_load_paths << Rails.root.join("extras")
+
+  config.i18n.available_locales = [:da, :de, :en]
+  config.i18n.default_locale = :en
+  config.i18n.fallbacks = {
+    da: [:da, :en, :de],
+    de: [:de, :en, :da],
+    en: [:en, :de, :da]
+  }
 end

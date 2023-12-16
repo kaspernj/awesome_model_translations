@@ -6,12 +6,12 @@ module AwesomeModelTranslations::Sluggable
 
     base.scope :where_current_slug, lambda { |slug|
       joins(:slugs)
-        .where(slugs: {locale: I18n.locale}).where("slugs.slug = :slug OR #{table_name}.id = :slug", slug:)
+        .where(slugs: {locale: I18n.locale}).where("slugs.slug = :slug OR #{table_name}.id = :slug", slug: slug)
     }
   end
 
   module ClassMethods
-    def find_by_friendly!(param)
+    def find_by_sluggable!(param)
       return find(param) if UuidTester.uuid?(param)
 
       locales = I18n.fallbacks[I18n.locale]&.map(&:to_s) || [I18n.locale.to_]
@@ -65,7 +65,7 @@ module AwesomeModelTranslations::Sluggable
 
         next if slug.blank?
 
-        slugs.find_or_create_by!(locale:, slug:)
+        slugs.find_or_create_by!(locale: locale, slug: slug)
       end
     end
   end
