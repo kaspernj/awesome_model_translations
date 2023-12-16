@@ -38,5 +38,10 @@ describe AwesomeModelTranslations::Sluggable do
     # It only creates new slug for changed values
     expect { project.update!(name_da: "New new danish name", name_de: "New german name", name_en: "New english name") }
       .to change(AwesomeModelTranslations::Slug, :count).by(1)
+
+    # It returns the expected slug for the current locale
+    I18n.with_locale(:da) { expect(project).to have_attributes(name: "New new danish name") }
+    I18n.with_locale(:de) { expect(project).to have_attributes(name: "New german name") }
+    I18n.with_locale(:en) { expect(project).to have_attributes(name: "New english name") }
   end
 end
