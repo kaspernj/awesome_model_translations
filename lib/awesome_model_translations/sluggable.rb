@@ -35,10 +35,10 @@ module AwesomeModelTranslations::Sluggable
 
   def __current_slug
     locales = I18n.fallbacks[I18n.locale].map(&:to_s) || [I18n.locale.to_s]
-    slugs = slugs.to_a.sort_by(&:created_at).reverse
+    slugs_to_check = slugs.to_a.sort_by(&:created_at).reverse
 
     locales.each do |locale|
-      slug_with_locale = slugs.find { |slug| slug.locale == locale }
+      slug_with_locale = slugs_to_check.find { |slug| slug.locale == locale }
 
       return slug_with_locale.slug if slug_with_locale
     end
@@ -47,8 +47,8 @@ module AwesomeModelTranslations::Sluggable
   end
 
   def __generate_slug
-    name_for_slug = if respond_to?(:friendly_id_slug, true) && friendly_id_slug.present?
-      friendly_id_slug
+    name_for_slug = if respond_to?(:sluggable_slug, true) && sluggable_slug.present?
+      sluggable_slug
     elsif name.present?
       name
     end
