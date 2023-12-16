@@ -1,2 +1,2 @@
-class AwesomeModelTranslations::Translation < ActiveRecord::Base
+class AwesomeModelTranslations::Translation < ApplicationRecord
 end

@@ -1,2 +1,2 @@
-AwesomeModelTranslations::Engine.routes.draw do
+AwesomeModelTranslations::Engine.routes.draw do # rubocop:disable Lint/EmptyBlock
 end

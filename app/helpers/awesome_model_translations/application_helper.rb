@@ -1,4 +1,2 @@
-module AwesomeModelTranslations
-  module ApplicationHelper
-  end
+module AwesomeModelTranslations::ApplicationHelper
 end

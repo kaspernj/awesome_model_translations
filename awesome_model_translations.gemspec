@@ -9,6 +9,7 @@ Gem::Specification.new do |spec|
   spec.summary     = "Model translations for ActiveRecord."
   spec.description = "Model translations for ActiveRecord."
   spec.license     = "MIT"
+  spec.required_ruby_version = ">= 2.7.8"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
@@ -22,9 +23,6 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7.0.0"
-  spec.add_dependency "globalize_current_translation", ">= 0.0.2"
 
-  spec.add_development_dependency "pry-rails"
-  spec.add_development_dependency "factory_bot_rails"
-  spec.add_development_dependency "rspec-rails"
+  spec.metadata["rubygems_mfa_required"] = "true"
 end

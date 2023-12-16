@@ -4,7 +4,7 @@ module AwesomeModelTranslations::ModelExtensions
   end
 
   module ClassMethods
-    def translates(*attributes)
+    def translates(*attributes) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
       translations_class_name = "#{name}::Translation"
       translations_table_name = "#{table_name.singularize}_translations"
 
@@ -20,7 +20,8 @@ module AwesomeModelTranslations::ModelExtensions
         attributes
       end
 
-      translation_model_class.belongs_to :globalized_model, class_name: model_name.name, foreign_key: "#{model_name.element}_id", inverse_of: :translations, optional: true
+      translation_model_class.belongs_to :globalized_model, class_name: model_name.name, foreign_key: "#{model_name.element}_id", inverse_of: :translations,
+        optional: true
 
       const_set(:Translation, translation_model_class)
 
@@ -34,10 +35,10 @@ module AwesomeModelTranslations::ModelExtensions
         attribute attribute_name.to_sym
 
         define_method(attribute_name) do
-          fallbacks = I18n.fallbacks.fetch(I18n.locale)
+          fallbacks = I18n.fallbacks[I18n.locale]
           value = nil
 
-          fallbacks.each do |locale|
+          fallbacks&.each do |locale|
             value = __send__("#{attribute_name}_#{locale}")
 
             break if value.present?
@@ -67,7 +68,7 @@ module AwesomeModelTranslations::ModelExtensions
         end
       end
 
-      include GlobalizeCurrentTranslation::Scope
+      include AwesomeModelTranslations::CurrentTranslationScope
     end
   end
 end

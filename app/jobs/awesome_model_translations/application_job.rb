@@ -1,4 +1,2 @@
-module AwesomeModelTranslations
-  class ApplicationJob < ActiveJob::Base
-  end
+class AwesomeModelTranslations::ApplicationJob < ActiveJob::Base
 end

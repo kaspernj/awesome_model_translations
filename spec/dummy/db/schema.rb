@@ -10,7 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_03_053949) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_16_092051) do
+  create_table "gender_translations", force: :cascade do |t|
+    t.integer "gender_id", null: false
+    t.string "locale", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["gender_id"], name: "index_gender_translations_on_gender_id"
+    t.index ["locale"], name: "index_gender_translations_on_locale"
+  end
+
+  create_table "genders", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "project_translations", force: :cascade do |t|
     t.integer "project_id", null: false
     t.string "locale", null: false
@@ -26,5 +41,21 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_03_053949) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "slugs", force: :cascade do |t|
+    t.string "slug", null: false
+    t.string "scope"
+    t.datetime "created_at"
+    t.string "locale", null: false
+    t.string "sluggable_type", null: false
+    t.integer "sluggable_id", null: false
+    t.index ["locale"], name: "index_friendly_id_slugs_on_locale"
+    t.index ["slug", "sluggable_type", "locale"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_locale"
+    t.index ["slug", "sluggable_type", "scope", "locale"], name: "index_friendly_id_slugs_uniqueness", unique: true
+    t.index ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id"
+    t.index ["sluggable_type", "sluggable_id"], name: "index_slugs_on_sluggable"
+    t.index ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type"
+  end
+
+  add_foreign_key "gender_translations", "genders"
   add_foreign_key "project_translations", "projects"
 end
