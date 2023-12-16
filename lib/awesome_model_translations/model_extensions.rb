@@ -34,10 +34,10 @@ module AwesomeModelTranslations::ModelExtensions
         attribute attribute_name.to_sym
 
         define_method(attribute_name) do
-          fallbacks = I18n.fallbacks.fetch(I18n.locale)
+          fallbacks = I18n.fallbacks[I18n.locale]
           value = nil
 
-          fallbacks.each do |locale|
+          fallbacks&.each do |locale|
             value = __send__("#{attribute_name}_#{locale}")
 
             break if value.present?
@@ -67,7 +67,7 @@ module AwesomeModelTranslations::ModelExtensions
         end
       end
 
-      include GlobalizeCurrentTranslation::Scope
+      include AwesomeModelTranslations::CurrentTranslationScope
     end
   end
 end

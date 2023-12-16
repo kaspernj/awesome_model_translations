@@ -24,6 +24,9 @@ module Dummy
 
     config.i18n.available_locales = [:da, :en]
     config.i18n.default_locale = :en
-    config.i18n.fallbacks = [:en, :da]
+    config.i18n.fallbacks = {
+      da: [:da, :en],
+      en: [:en, :da]
+    }
   end
 end
