@@ -1,2 +1,2 @@
-class AwesomeModelTranslations::Translation < ApplicationRecord
+class AwesomeModelTranslations::Translation < AwesomeModelTranslations::ApplicationRecord
 end
