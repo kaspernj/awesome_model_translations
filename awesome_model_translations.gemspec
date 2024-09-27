@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.summary     = "Model translations for ActiveRecord."
   spec.description = "Model translations for ActiveRecord."
   spec.license     = "MIT"
-  spec.required_ruby_version = ">= 2.7.8"
+  spec.required_ruby_version = ">= 3.3.5"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the "allowed_push_host"
   # to allow pushing to a single host or delete this section to allow pushing to any host.
