@@ -4,7 +4,7 @@ module AwesomeModelTranslations::ModelExtensions
   end
 
   module ClassMethods
-    def translates(*attributes) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def translates(*attributes) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       translations_class_name = "#{name}::Translation"
       translations_table_name = "#{table_name.singularize}_translations"
 
@@ -29,6 +29,25 @@ module AwesomeModelTranslations::ModelExtensions
 
       define_method(:changed?) do |*args, &blk|
         super(*args, &blk) || translations.target.any?(&:changed?)
+      end
+
+      define_method(:changes) do |*args, &blk|
+        original_changes = super(*args, &blk).clone
+        translated_changes = {}
+
+        self.class.translated_attribute_names.each do |translated_attribute_name|
+          original_changes.delete(translated_attribute_name.to_s)
+        end
+
+        association(:translations).target.each do |translation|
+          self.class.translated_attribute_names.each do |translated_attribute_name|
+            if translation.changes.key?(translated_attribute_name.to_s)
+              translated_changes["#{translated_attribute_name}_#{translation.locale}"] = translation.changes.fetch(translated_attribute_name.to_s)
+            end
+          end
+        end
+
+        original_changes.merge(translated_changes)
       end
 
       attributes.each do |attribute_name|

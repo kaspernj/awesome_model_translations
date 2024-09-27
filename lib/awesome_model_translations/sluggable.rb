@@ -6,7 +6,7 @@ module AwesomeModelTranslations::Sluggable
 
     base.scope :where_current_slug, lambda { |slug|
       joins(:slugs)
-        .where(slugs: {locale: I18n.locale}).where("slugs.slug = :slug OR #{table_name}.id = :slug", slug: slug)
+        .where(slugs: {locale: I18n.locale}).where("slugs.slug = :slug OR #{table_name}.id = :slug", slug:)
     }
   end
 
@@ -65,7 +65,7 @@ module AwesomeModelTranslations::Sluggable
 
         next if slug.blank?
 
-        slugs.find_or_create_by!(locale: locale, slug: slug)
+        slugs.find_or_create_by!(locale:, slug:)
       end
     end
   end
