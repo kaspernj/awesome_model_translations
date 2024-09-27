@@ -4,7 +4,7 @@ module AwesomeModelTranslations::ModelExtensions
   end
 
   module ClassMethods
-    def translates(*attributes) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+    def translates(*attributes) # rubocop:disable Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/PerceivedComplexity
       translations_class_name = "#{name}::Translation"
       translations_table_name = "#{table_name.singularize}_translations"
 
