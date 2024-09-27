@@ -36,6 +36,26 @@ describe AwesomeModelTranslations::ModelExtensions do
     end
   end
 
+  describe "#saved_changes" do
+    it "tells what translated attributes has changed" do
+      project.update!(
+        name_da: "Nyt dansk navn",
+        name_en: "New english name"
+      )
+      expect(project.saved_changes.keys).to eq ["updated_at", "name_da", "name_en"]
+      expect(project.saved_changes).to include(
+        "name_da" => ["Test projekt", "Nyt dansk navn"],
+        "name_en" => ["Test project", "New english name"]
+      )
+    end
+
+    it "works when no translations has been changed" do
+      project.reload
+      project.update!(created_at: "1985-06-17 10:30")
+      expect(project.saved_changes.keys).to eq ["created_at", "updated_at"]
+    end
+  end
+
   describe "#translated_attribute_names" do
     it "returns a list of names" do
       expect(Project.translated_attribute_names).to eq [:name]
