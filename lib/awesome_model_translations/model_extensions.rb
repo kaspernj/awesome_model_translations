@@ -27,6 +27,25 @@ module AwesomeModelTranslations::ModelExtensions
 
       has_many :translations, autosave: true, class_name: translations_class_name, dependent: :destroy, inverse_of: :globalized_model
 
+      define_method(:attributes) do |*args, &blk|
+        original_attributes = super(*args, &blk).clone
+        translated_attributes = {}
+
+        self.class.translated_attribute_names.each do |translated_attribute_name|
+          original_attributes.delete(translated_attribute_name.to_s)
+        end
+
+        association(:translations).target.each do |translation|
+          self.class.translated_attribute_names.each do |translated_attribute_name|
+            if translation.attributes.key?(translated_attribute_name.to_s)
+              translated_attributes["#{translated_attribute_name}_#{translation.locale}"] = translation.attributes.fetch(translated_attribute_name.to_s)
+            end
+          end
+        end
+
+        original_attributes.merge(translated_attributes)
+      end
+
       define_method(:changed?) do |*args, &blk|
         super(*args, &blk) || translations.target.any?(&:changed?)
       end
