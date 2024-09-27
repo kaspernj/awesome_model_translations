@@ -51,7 +51,6 @@ describe AwesomeModelTranslations::ModelExtensions do
 
     it "works when no translations has been changed" do
       project.reload
-      original_created_at = project.created_at
       project.update!(created_at: "1985-06-17 10:30")
       expect(project.saved_changes.keys).to eq ["created_at", "updated_at"]
     end
