@@ -3,6 +3,18 @@ require "rails_helper"
 describe AwesomeModelTranslations::ModelExtensions do
   let(:project) { create :project, name_da: "Test projekt", name_en: "Test project" }
 
+  describe "#attributes" do
+    it "includes the translated attributes" do
+      expect(project.attributes).to eq(
+        "id" => project.id,
+        "name_da" => "Test projekt",
+        "name_en" => "Test project",
+        "created_at" => project.created_at,
+        "updated_at" => project.updated_at
+      )
+    end
+  end
+
   describe "#changes" do
     it "tells what translated attributes has changed" do
       project.assign_attributes(
