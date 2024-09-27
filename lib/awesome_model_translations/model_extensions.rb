@@ -50,6 +50,25 @@ module AwesomeModelTranslations::ModelExtensions
         original_changes.merge(translated_changes)
       end
 
+      define_method(:saved_changes) do |*args, &blk|
+        original_saved_changes = super(*args, &blk).clone
+        translated_saved_changes = {}
+
+        self.class.translated_attribute_names.each do |translated_attribute_name|
+          original_saved_changes.delete(translated_attribute_name.to_s)
+        end
+
+        association(:translations).target.each do |translation|
+          self.class.translated_attribute_names.each do |translated_attribute_name|
+            if translation.saved_changes.key?(translated_attribute_name.to_s)
+              translated_saved_changes["#{translated_attribute_name}_#{translation.locale}"] = translation.saved_changes.fetch(translated_attribute_name.to_s)
+            end
+          end
+        end
+
+        original_saved_changes.merge(translated_saved_changes)
+      end
+
       attributes.each do |attribute_name|
         attribute attribute_name.to_sym
 
