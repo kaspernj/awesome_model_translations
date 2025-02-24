@@ -15,6 +15,7 @@ group :development, :test do
   gem "rubocop-performance"
   gem "rubocop-rails"
   gem "rubocop-rspec"
+  gem "rubocop-rspec_rails"
 end
 
 # Start debugger with binding.b [https://github.com/ruby/debug]
