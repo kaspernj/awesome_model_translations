@@ -15,6 +15,7 @@ plugins:
 require:
   - rubocop-factory_bot
   - rubocop-rails
+  - rubocop-rspec_rails
 
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
