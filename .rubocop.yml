@@ -8,11 +8,13 @@ AllCops:
     - spec/dummy/db/schema.rb
   NewCops: enable
 
+plugins:
+  - rubocop-performance
+  - rubocop-rspec
+
 require:
   - rubocop-factory_bot
-  - rubocop-performance
   - rubocop-rails
-  - rubocop-rspec
 
 FactoryBot/ConsistentParenthesesStyle:
   Enabled: false
