@@ -10,11 +10,11 @@ AllCops:
 
 plugins:
   - rubocop-rails
+  - rubocop-performance
   - rubocop-rspec
 
 require:
   - rubocop-factory_bot
-  - rubocop-performance
   - rubocop-rspec_rails
 
 FactoryBot/ConsistentParenthesesStyle:
