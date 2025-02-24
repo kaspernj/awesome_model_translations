@@ -23,7 +23,6 @@ Gem::Specification.new do |spec|
   end
 
   spec.add_dependency "rails", ">= 7.0.0"
-  spec.add_development_dependency "concurrent-ruby", "1.3.4"
 
   spec.metadata["rubygems_mfa_required"] = "true"
 end
