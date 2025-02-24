@@ -9,12 +9,12 @@ AllCops:
   NewCops: enable
 
 plugins:
+  - rubocop-rails
   - rubocop-rspec
 
 require:
   - rubocop-factory_bot
   - rubocop-performance
-  - rubocop-rails
   - rubocop-rspec_rails
 
 FactoryBot/ConsistentParenthesesStyle:
