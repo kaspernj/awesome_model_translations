@@ -96,7 +96,7 @@ module AwesomeModelTranslations::ModelExtensions
           value = nil
 
           fallbacks&.each do |locale|
-            value = __send__("#{attribute_name}_#{locale}")
+            value = __send__(:"#{attribute_name}_#{locale}")
 
             break if value.present?
           end
@@ -104,18 +104,18 @@ module AwesomeModelTranslations::ModelExtensions
           value
         end
 
-        define_method("#{attribute_name}=") do |new_value|
-          __send__("#{attribute_name}_#{I18n.locale}=", new_value)
+        define_method(:"#{attribute_name}=") do |new_value|
+          __send__(:"#{attribute_name}_#{I18n.locale}=", new_value)
         end
 
         I18n.available_locales.each do |locale|
           current_locale = locale.to_s
 
-          define_method("#{attribute_name}_#{locale}") do
+          define_method(:"#{attribute_name}_#{locale}") do
             translations.detect { |translation| translation.locale == current_locale }&.__send__(attribute_name)
           end
 
-          define_method("#{attribute_name}_#{locale}=") do |new_value|
+          define_method(:"#{attribute_name}_#{locale}=") do |new_value|
             translation = translations.detect { |translation_i| translation_i.locale == current_locale }
             translation ||= translations.build(locale: current_locale)
             old_value = translation.__send__(attribute_name)
