@@ -7,7 +7,7 @@ gemspec
 gem "sqlite3"
 
 group :development, :test do
-  gem "concurrent-ruby", "1.3.4"
+  gem "concurrent-ruby", "1.3.5"
   gem "factory_bot_rails"
   gem "pry-rails"
   gem "rspec-rails"
