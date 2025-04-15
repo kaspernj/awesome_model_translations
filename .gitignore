@@ -1,4 +1,5 @@
 /.bundle/
+/awesome_model_translations-*.gem
 /doc/
 /log/*.log
 /pkg/

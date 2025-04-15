@@ -4,7 +4,7 @@ Gem::Specification.new do |spec|
   spec.name        = "awesome_model_translations"
   spec.version     = AwesomeModelTranslations::VERSION
   spec.authors     = ["kaspernj"]
-  spec.email       = ["k@spernj.org"]
+  spec.email       = ["kasper@diestoeckels.de"]
   spec.homepage    = "https://github.com/kaspernj/awesome_model_translations"
   spec.summary     = "Model translations for ActiveRecord."
   spec.description = "Model translations for ActiveRecord."
