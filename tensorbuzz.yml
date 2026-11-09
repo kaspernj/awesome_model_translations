@@ -1,0 +1,46 @@
+before_script:
+  - cd spec/dummy && RAILS_ENV=test bundle exec rails db:create db:schema:load
+rvm: true
+builds:
+  build_1:
+    environment:
+      RUBY_VERSION: 3.3.5
+    name: Ruby 3.3.5
+    # rspec reads the engine (lib/, app/, config/, db/), the dummy app it boots
+    # (spec/), the bundle (Gemfile/Gemfile.lock/gemspec) and the Ruby pin.
+    # README.md, MIT-LICENSE, .gitignore, .github/ and the dummy app's static
+    # public/ assets cannot affect a spec run, so they stay outside this list.
+    paths:
+      - "app/**"
+      - "bin/**"
+      - "config/**"
+      - "db/**"
+      - "lib/**"
+      - "spec/**"
+      - ".rspec"
+      - ".ruby-version"
+      - "Gemfile"
+      - "Gemfile.lock"
+      - "Rakefile"
+      - "awesome_model_translations.gemspec"
+    script:
+      - bundle exec rspec
+  build_2:
+    name: Rubocop
+    # Carved out because .rubocop.yml excludes it: `rubocop --list-target-files`
+    # does not inspect spec/dummy/db/schema.rb, so a schema dump cannot change a
+    # lint result. It still runs build_1, which loads that schema.
+    paths:
+      - "**/*.rb"
+      - "**/*.rake"
+      - "**/*.gemspec"
+      - "**/bin/**"
+      - "Gemfile"
+      - "Gemfile.lock"
+      - "Rakefile"
+      - "config.ru"
+      - ".rubocop.yml"
+      - ".ruby-version"
+      - "!spec/dummy/db/schema.rb"
+    script:
+      - bundle exec rubocop
